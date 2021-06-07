@@ -16,7 +16,7 @@ class ImageUtil {
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
     }
 
-    fun convert(bitmap: Bitmap?): String? {
+    fun convert(bitmap: Bitmap?): String {
         val outputStream = ByteArrayOutputStream()
         bitmap?.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
         return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)

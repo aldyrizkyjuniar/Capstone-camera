@@ -12,10 +12,10 @@ interface Api {
 //    @GET("function-4")
 //    fun getPosts(): Call<ArrayList<PostResponse>>
     @Multipart
-    @POST("/functions-2")
-    fun postImageBase64(@Part("image_base64") image_base64: String?): Call<ArrayList<PostResponse>>
+    @POST("upload")
+    fun postImageBase64(@Part("image") image_base64: String): Call<ArrayList<PostResponse>>
 
     @Multipart
-    @POST("/functions-4")
+    @POST("upload")
     fun postImageFile(@Part part: MultipartBody.Part): Call<ArrayList<PostResponse>>
 }

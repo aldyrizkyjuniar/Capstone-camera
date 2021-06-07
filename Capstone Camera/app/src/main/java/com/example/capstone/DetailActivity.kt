@@ -41,9 +41,9 @@ class DetailActivity :AppCompatActivity(){
 
         rvPost.setHasFixedSize(true)
         rvPost.layoutManager = LinearLayoutManager(this)
-        uploadPictureAsBase64(imageBitmap)
-//        uploadPictureAsBytesArray(imageBitmap)
-
+//        uploadPictureAsBase64(imageBitmap)
+        uploadPictureAsBytesArray(imageBitmap)
+//
 //        RetrofitClient.instance.getPosts().enqueue(object: retrofit2.Callback<ArrayList<PostResponse>>{
 //            override fun onFailure(call: Call<ArrayList<PostResponse>>, t: Throwable) {
 //
@@ -68,10 +68,13 @@ class DetailActivity :AppCompatActivity(){
     private fun uploadPictureAsBase64(imageBitMap: Bitmap?){
 
 //        Bitmap to base64
-        val base64String: String? = ImageUtil().convert(imageBitMap)
+        val base64String: String = ImageUtil().convert(imageBitMap)
+        println("Finished Convert")
         RetrofitClient.instance.postImageBase64(base64String).enqueue(object: retrofit2.Callback<ArrayList<PostResponse>>{
             override fun onFailure(call: Call<ArrayList<PostResponse>>, t:Throwable){
                 println("Failure")
+                println(t.message)
+//                println(t.message.toString())
             }
             override fun onResponse(
                 call: Call<ArrayList<PostResponse>>,
@@ -90,7 +93,7 @@ class DetailActivity :AppCompatActivity(){
 
         val imageOutStream: ByteArrayOutputStream = ImageUtil().asByteArrayOutputStream(imageBitMap)
         val part = MultipartBody.Part.createFormData(
-            "image_file", "uploaded_image.png", RequestBody.create(
+            "image", "uploaded_image.png", RequestBody.create(
                 MediaType.parse("image/*"), imageOutStream.toByteArray()
             )
         )
@@ -98,6 +101,8 @@ class DetailActivity :AppCompatActivity(){
         RetrofitClient.instance.postImageFile(part).enqueue(object: retrofit2.Callback<ArrayList<PostResponse>>{
             override fun onFailure(call: Call<ArrayList<PostResponse>>, t:Throwable){
                 println("Failure")
+                println(t.message)
+//                println(t.message.toString())
             }
             override fun onResponse(
                 call: Call<ArrayList<PostResponse>>,
