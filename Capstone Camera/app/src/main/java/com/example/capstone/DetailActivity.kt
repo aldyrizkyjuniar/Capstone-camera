@@ -38,28 +38,28 @@ class DetailActivity :AppCompatActivity(){
         rvPost.setHasFixedSize(true)
         rvPost.layoutManager = LinearLayoutManager(this)
 
-        RetrofitClient.instance.getPosts().enqueue(object: retrofit2.Callback<ArrayList<PostResponse>>{
-            override fun onFailure(call: Call<ArrayList<PostResponse>>, t: Throwable) {
-
-            }
-
-            override fun onResponse(
-                call: Call<ArrayList<PostResponse>>,
-                response: Response<ArrayList<PostResponse>>
-            ) {
-                val responseCode = response.code().toString()
-                tvResponseCode.text = responseCode
-                response.body()?.let { list.addAll(it) }
-                val adapter = PostAdapter(list)
-                rvPost.adapter = adapter
-            }
-
-
-        })
+//        RetrofitClient.instance.getPosts().enqueue(object: retrofit2.Callback<ArrayList<PostResponse>>{
+//            override fun onFailure(call: Call<ArrayList<PostResponse>>, t: Throwable) {
+//
+//            }
+//
+//            override fun onResponse(
+//                call: Call<ArrayList<PostResponse>>,
+//                response: Response<ArrayList<PostResponse>>
+//            ) {
+//                val responseCode = response.code().toString()
+//                tvResponseCode.text = responseCode
+//                response.body()?.let { list.addAll(it) }
+//                val adapter = PostAdapter(list)
+//                rvPost.adapter = adapter
+//            }
+//
+//
+//        })
 
     }
 
-    private fun sendPostRequest() {
+    private fun convertBitmapToByte() {
 
     }
 

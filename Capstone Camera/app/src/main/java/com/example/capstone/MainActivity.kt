@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else
             captureButton.isEnabled = true
 
-        captureButton.setOnClickListener { this }
-        uploadButton.setOnClickListener { this }
+        captureButton.setOnClickListener(this)
+        uploadButton.setOnClickListener(this)
 
     }
 
