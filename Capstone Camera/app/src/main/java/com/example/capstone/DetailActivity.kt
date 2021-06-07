@@ -3,7 +3,6 @@ package com.example.capstone
 import android.graphics.Bitmap
 import android.media.Image
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.networking.PostAdapter
 import com.example.capstone.networking.PostResponse
 import com.example.capstone.networking.RetrofitClient
+import com.example.capstone.util.ImageUtil
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
-import javax.security.auth.callback.Callback
+import java.io.ByteArrayOutputStream
+
 
 class DetailActivity :AppCompatActivity(){
     lateinit var rvPost: RecyclerView
@@ -37,6 +41,8 @@ class DetailActivity :AppCompatActivity(){
 
         rvPost.setHasFixedSize(true)
         rvPost.layoutManager = LinearLayoutManager(this)
+        uploadPictureAsBase64(imageBitmap)
+//        uploadPictureAsBytesArray(imageBitmap)
 
 //        RetrofitClient.instance.getPosts().enqueue(object: retrofit2.Callback<ArrayList<PostResponse>>{
 //            override fun onFailure(call: Call<ArrayList<PostResponse>>, t: Throwable) {
@@ -59,8 +65,50 @@ class DetailActivity :AppCompatActivity(){
 
     }
 
-    private fun convertBitmapToByte() {
+    private fun uploadPictureAsBase64(imageBitMap: Bitmap?){
 
+//        Bitmap to base64
+        val base64String: String? = ImageUtil().convert(imageBitMap)
+        RetrofitClient.instance.postImageBase64(base64String).enqueue(object: retrofit2.Callback<ArrayList<PostResponse>>{
+            override fun onFailure(call: Call<ArrayList<PostResponse>>, t:Throwable){
+                println("Failure")
+            }
+            override fun onResponse(
+                call: Call<ArrayList<PostResponse>>,
+                response: Response<ArrayList<PostResponse>>
+            ) {
+                val responseCode = response.code().toString()
+                tvResponseCode.text = responseCode
+                response.body()?.let { list.addAll(it) }
+                val adapter = PostAdapter(list)
+                rvPost.adapter = adapter
+            }
+        })
     }
 
+    private fun uploadPictureAsBytesArray(imageBitMap: Bitmap?){
+
+        val imageOutStream: ByteArrayOutputStream = ImageUtil().asByteArrayOutputStream(imageBitMap)
+        val part = MultipartBody.Part.createFormData(
+            "image_file", "uploaded_image.png", RequestBody.create(
+                MediaType.parse("image/*"), imageOutStream.toByteArray()
+            )
+        )
+
+        RetrofitClient.instance.postImageFile(part).enqueue(object: retrofit2.Callback<ArrayList<PostResponse>>{
+            override fun onFailure(call: Call<ArrayList<PostResponse>>, t:Throwable){
+                println("Failure")
+            }
+            override fun onResponse(
+                call: Call<ArrayList<PostResponse>>,
+                response: Response<ArrayList<PostResponse>>
+            ) {
+                val responseCode = response.code().toString()
+                tvResponseCode.text = responseCode
+                response.body()?.let { list.addAll(it) }
+                val adapter = PostAdapter(list)
+                rvPost.adapter = adapter
+            }
+        })
+    }
 }

@@ -2,7 +2,6 @@ package com.example.capstone.networking
 
 
 import okhttp3.MultipartBody
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -13,6 +12,10 @@ interface Api {
 //    @GET("function-4")
 //    fun getPosts(): Call<ArrayList<PostResponse>>
     @Multipart
+    @POST("/functions-2")
+    fun postImageBase64(@Part("image_base64") image_base64: String?): Call<ArrayList<PostResponse>>
+
+    @Multipart
     @POST("/functions-4")
-    fun postImage(@Part image: MultipartBody.Part?): Call<ArrayList<PostResponse>>
+    fun postImageFile(@Part part: MultipartBody.Part): Call<ArrayList<PostResponse>>
 }
