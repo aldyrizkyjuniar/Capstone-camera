@@ -11,16 +11,15 @@ import com.example.capstone.R
 class PostAdapter (private val list: ArrayList<PostResponse>): RecyclerView.Adapter<PostAdapter.PostViewHolder>(){
     lateinit var tvText: TextView
 
-
-
     inner class PostViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(postResponse: PostResponse){
 
             with(itemView){
                 tvText = findViewById(R.id.tvText)
-                val text = "id: ${postResponse.id}\n" +
-                        "title: ${postResponse.title}\n"+
-                        "text: ${postResponse.text}"
+                val text = "Name : ${postResponse.name}\n"+
+                        "Confidence : ${postResponse.confidence}\n"+
+                        "Detail : ${postResponse.detail}\n" +
+                        "Treatment : ${postResponse.treatment}"
                 tvText.text = text
             }
         }
