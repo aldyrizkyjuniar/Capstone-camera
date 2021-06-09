@@ -16,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:transitionName="logo_image"
         android:scaleType="centerCrop"
-        android:src="@drawable/tomato"
+        android:src="@drawable/tmt"
         android:layout_gravity="center"
         />
 

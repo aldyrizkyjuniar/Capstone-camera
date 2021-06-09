@@ -13,11 +13,11 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="125dp"
-            android:layout_height="158dp"
+            android:layout_width="184dp"
+            android:layout_height="212dp"
             android:layout_centerInParent="true"
-            android:transitionName="logo_image"
-            android:src="@drawable/tomato" />
+            android:src="@drawable/tmt"
+            android:transitionName="logo_image" />
 
         <TextView
             android:id="@+id/textView"
@@ -26,9 +26,9 @@
             android:layout_below="@+id/imageView"
             android:layout_centerInParent="true"
             android:fontFamily="@font/aclonica"
-            android:transitionName="logo_text"
-            android:text="Tomatoes Security"
-            android:textSize="35sp" />
+            android:text="TMT Team"
+            android:textSize="45sp"
+            android:transitionName="logo_text" />
 
     </RelativeLayout>
 
